@@ -11,7 +11,7 @@ public class Poll {
     @Column(name = "POLL_ID")
     private Long id;
 
-    @Column(name = "POLL_QUESTION")
+    @Column(name = "QUESTION")
     private String question;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -41,5 +41,10 @@ public class Poll {
 
     public void setOptions(Set<Option> options) {
         this.options = options;
+    }
+
+    @Override
+    public String toString() {
+        return getId() + ", " + getQuestion() + ", " + getOptions();
     }
 }
