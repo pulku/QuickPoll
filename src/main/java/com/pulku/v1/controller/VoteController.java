@@ -1,4 +1,4 @@
-package com.pulku.controller;
+package com.pulku.v1.controller;
 
 import com.pulku.domain.Vote;
 import com.pulku.repository.VoteRepository;
@@ -13,7 +13,8 @@ import javax.inject.Inject;
 /**
  * Created by pınar on 27.03.2016.
  */
-@RestController
+@RestController("voteControllerV1")
+@RequestMapping("/v1/")
 public class VoteController {
 
     @Inject

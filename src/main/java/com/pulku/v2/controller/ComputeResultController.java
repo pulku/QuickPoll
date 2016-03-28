@@ -1,4 +1,4 @@
-package com.pulku.controller;
+package com.pulku.v2.controller;
 
 import com.pulku.domain.Vote;
 import com.pulku.dto.OptionCount;
@@ -18,7 +18,8 @@ import java.util.Map;
 /**
  * Created by pınar on 28.03.2016.
  */
-@RestController
+@RestController("computeResultControllerv2")
+@RequestMapping("/v2/")
 public class ComputeResultController {
 
     @Inject

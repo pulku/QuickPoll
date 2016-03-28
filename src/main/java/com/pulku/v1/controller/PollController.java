@@ -1,4 +1,4 @@
-package com.pulku.controller;
+package com.pulku.v1.controller;
 
 import com.pulku.domain.Poll;
 import com.pulku.dto.error.ErrorDetail;
@@ -21,7 +21,8 @@ import java.net.URI;
 /**
  * Created by pınar on 26.03.2016.
  */
-@RestController
+@RestController("pollControllerV1")
+@RequestMapping("/v1/")
 @Api(value = "polls", description = "Poll API")
 public class PollController {
 
