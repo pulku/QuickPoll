@@ -1,6 +1,7 @@
 package com.pulku.controller;
 
 import com.pulku.domain.Poll;
+import com.pulku.exception.ResourceNotFoundException;
 import com.pulku.repository.PollRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,13 @@ public class PollController {
 
     @Inject
     private PollRepository pollRepository;
+
+    protected void verifyPoll(Long pollId) throws ResourceNotFoundException {
+        Poll poll = pollRepository.findOne(pollId);
+        if(poll == null) {
+            throw new ResourceNotFoundException("Poll with id " + pollId + " not found");
+        }
+    }
 
     @RequestMapping(value = "/polls", method = RequestMethod.GET)
     public ResponseEntity<Iterable<Poll>> getAllPolls() {
@@ -42,19 +50,22 @@ public class PollController {
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.GET)
     public ResponseEntity<?> getPoll(@PathVariable Long pollId) {
+        verifyPoll(pollId);
         Poll poll =pollRepository.findOne(pollId);
         return new ResponseEntity<Object>(poll, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId){
+        verifyPoll(pollId);
         //Save the entity
-        Poll p = pollRepository.save(poll);
+        pollRepository.save(poll);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletePoll(@PathVariable Long pollId){
+        verifyPoll(pollId);
         pollRepository.delete(pollId);
         return  new ResponseEntity<Object>(HttpStatus.OK);
     }
