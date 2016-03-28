@@ -1,10 +1,10 @@
 package com.pulku.repository;
 
 import com.pulku.domain.Poll;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * Created by pınar on 26.03.2016.
  */
-public interface PollRepository extends CrudRepository<Poll, Long> {
+public interface PollRepository extends PagingAndSortingRepository<Poll, Long> {
 }
