@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 
 /**
@@ -35,7 +36,7 @@ public class PollController {
     }
 
     @RequestMapping(value = "/polls", method = RequestMethod.POST)
-    public ResponseEntity<?> createPoll(@RequestBody Poll poll) {
+    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
         poll = pollRepository.save(poll);
 
         //Set the location header for the newly created resource

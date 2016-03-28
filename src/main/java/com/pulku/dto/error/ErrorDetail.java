@@ -1,4 +1,8 @@
-package com.pulku.dto;
+package com.pulku.dto.error;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by pınar on 28.03.2016.
@@ -10,6 +14,10 @@ public class ErrorDetail {
     private String detail;
     private long timeStamp;
     private String developerMessage;
+
+    private String path;
+
+    private Map<String, List<ValidationError>> errors = new HashMap<>();
 
 
     public String getTitle() {
@@ -50,5 +58,21 @@ public class ErrorDetail {
 
     public void setDeveloperMessage(String developerMessage) {
         this.developerMessage = developerMessage;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Map<String, List<ValidationError>> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Map<String, List<ValidationError>> errors) {
+        this.errors = errors;
     }
 }
