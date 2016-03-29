@@ -57,4 +57,16 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false);
         return swaggerSpringMvcPlugin;
     }
+
+    @Bean
+    public SwaggerSpringMvcPlugin v3APIConfiguration() {
+        SwaggerSpringMvcPlugin swaggerSpringMvcPlugin = new SwaggerSpringMvcPlugin(this.springSwaggerConfig);
+
+        swaggerSpringMvcPlugin.apiInfo(getApiInfo())
+                .apiVersion("3.0")
+                .includePatterns("/v3/*.*")
+                .swaggerGroup("v3")
+                .useDefaultResponseMessages(false);
+        return swaggerSpringMvcPlugin;
+    }
 }
