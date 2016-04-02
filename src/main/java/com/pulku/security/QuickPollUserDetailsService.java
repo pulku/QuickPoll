@@ -28,7 +28,7 @@ public class QuickPollUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if(user == null) {
-            throw new UsernameNotFoundException(String.format("UUser with the username %s doesn't exist", username));
+            throw new UsernameNotFoundException(String.format("User with the username %s doesn't exist", username));
         }
 
         //Create a granted authority based on user's role.
