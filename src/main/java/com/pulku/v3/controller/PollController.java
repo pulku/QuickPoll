@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,7 +24,7 @@ import java.net.URI;
 /**
  * Created by pınar on 26.03.2016.
  */
-@RestController("pollControllerv3")
+@RestController("pollControllerV3")
 @RequestMapping("/v3/")
 @Api(value = "polls", description = "Poll API")
 public class PollController {
@@ -64,24 +65,33 @@ public class PollController {
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.GET)
     @ApiOperation(value = "Retrieves the Poll associated with the poll Id", response = Poll.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
     public ResponseEntity<?> getPoll(@PathVariable Long pollId) {
         verifyPoll(pollId);
         Poll poll =pollRepository.findOne(pollId);
-        return new ResponseEntity<Object>(poll, HttpStatus.OK);
+        return new ResponseEntity<>(poll, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId){
+    @ApiOperation(value = "Updates given poll", response = Void.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
+    public ResponseEntity<Void> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId){
         verifyPoll(pollId);
         //Save the entity
         pollRepository.save(poll);
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deletePoll(@PathVariable Long pollId){
+    @ApiOperation(value = "Deletes given poll", response = Void.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
+    public ResponseEntity<Void> deletePoll(@PathVariable Long pollId){
         verifyPoll(pollId);
         pollRepository.delete(pollId);
-        return  new ResponseEntity<Object>(HttpStatus.OK);
+        return  new ResponseEntity<>(HttpStatus.OK);
     }
 }

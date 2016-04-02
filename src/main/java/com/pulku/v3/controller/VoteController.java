@@ -2,6 +2,10 @@ package com.pulku.v3.controller;
 
 import com.pulku.domain.Vote;
 import com.pulku.repository.VoteRepository;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +17,7 @@ import javax.inject.Inject;
 /**
  * Created by pınar on 27.03.2016.
  */
-@RestController("voteControllerv3")
+@RestController("voteControllerV3")
 @RequestMapping("/v3/")
 public class VoteController {
 
@@ -21,7 +25,10 @@ public class VoteController {
     private VoteRepository voteRepository;
 
     @RequestMapping(value = "/polls/{pollId}/votes", method = RequestMethod.POST)
-    public ResponseEntity<?> createVote(@PathVariable Long pollId, @RequestBody Vote vote) {
+    @ApiOperation(value = "Casts a new vote for a given poll",
+            notes = "The newly created vote Id will be sent in the location response header.", response = Void.class)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Vote created successfully", response = Void.class)})
+    public ResponseEntity<Void> createVote(@PathVariable Long pollId, @RequestBody Vote vote) {
         vote = voteRepository.save(vote);
 
 
@@ -36,7 +43,8 @@ public class VoteController {
     }
 
     @RequestMapping(value = "/polls/{pollId}/votes", method = RequestMethod.GET)
-    public Iterable<Vote> getAllVotes(@PathVariable Long pollId) {
+    @ApiOperation(value = "Retrieves all the votes", response = Vote.class, responseContainer = "List")
+    public Iterable<Vote> getAllVotes(@PathVariable Long pollId, Pageable pageable) {
         return voteRepository.findByPoll(pollId);
     }
 
