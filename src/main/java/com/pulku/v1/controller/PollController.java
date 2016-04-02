@@ -62,6 +62,8 @@ public class PollController {
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.GET)
     @ApiOperation(value = "Retrieves the Poll associated with the poll Id", response = Poll.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
     public ResponseEntity<?> getPoll(@PathVariable Long pollId) {
         verifyPoll(pollId);
         Poll poll =pollRepository.findOne(pollId);
@@ -69,6 +71,9 @@ public class PollController {
     }
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "Updates given poll", response = Void.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
     public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId){
         verifyPoll(pollId);
         //Save the entity
@@ -77,6 +82,9 @@ public class PollController {
     }
 
     @RequestMapping(value = "/polls/{pollId}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Deletes given poll", response = Void.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "", response = Void.class),
+            @ApiResponse(code = 404, message = "Unable to find poll", response = ErrorDetail.class)})
     public ResponseEntity<?> deletePoll(@PathVariable Long pollId){
         verifyPoll(pollId);
         pollRepository.delete(pollId);
