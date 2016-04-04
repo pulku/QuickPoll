@@ -25,7 +25,7 @@ import java.net.URI;
  * Created by pınar on 26.03.2016.
  */
 @RestController("pollControllerV3")
-@RequestMapping("/v3/")
+@RequestMapping({"/v3/", "/oauth2/v3/"})
 @Api(value = "polls", description = "Poll API")
 public class PollController {
 
