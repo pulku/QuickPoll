@@ -32,6 +32,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                     .secret("top_secret")
                     .authorizedGrantTypes("password")
                     .scopes("read", "write")
-                    .resourceIds("QuickPoll_Recources");
+                    .resourceIds("QuickPoll_Resources");
     }
 }
